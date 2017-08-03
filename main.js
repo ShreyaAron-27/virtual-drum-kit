@@ -1,3 +1,6 @@
+var currentSong;
+var shuffle=0;
+var slide=0;
 $('.welcome-screen button').on('click', function() {
     var name = $('#name-input').val();
     if (name.length > 2) { //name.length should be greater then 2 then only the code will run else nothing will happen
@@ -31,7 +34,7 @@ function fancyTimeFormat(time)
 
 function toggleSong() //a function to turn music on and off when reqired to reduce the writing of code baar baar
     {
-var song = document.querySelector('audio'); //audio is selected and saved in variable song
+var song = document.querySelector('.audio1'); //audio is selected and saved in variable song
 if(song.paused == true) { //if song paused then run the below code to play it
 console.log('Playing');
 $('.play-icon').removeClass('fa-play').addClass('fa-pause'); //play icon is displayed then remove this class and add add pause class in it so that when pausing the track is done we get the status of song by seeing the icon
@@ -43,15 +46,37 @@ $('.play-icon').removeClass('fa-pause').addClass('fa-play'); //pause icon is dis
 song.pause(); //pause the song
 }
 }
+function currentSongSource()
+    {
+        var audio= document.querySelector('.audio1');
+
+        var str= audio.src;
+        var start= str.length-9;
+        var res= str.substring(start,str.length);
+        console.log(res);
+        for(var i=0; i<songs.length;i++)
+        {
+            if(songs[i].source==res)
+            {
+                currentSong=i+1;
+                break;
+            }
+        }
+        return currentSong;
+
+    }
+  //---------------------- Drum App show -----------
+  var drumClicked = 0;
 $('#drumIcon').on('click', function(){
       drumClicked=1-drumClicked;
       if(drumClicked==1)
       {
+        console.log(1);
           $('.play-icon').addClass('disable');
           $('.next-icon').addClass('disable');
           $('.previous-icon').addClass('disable');
        $('.content').addClass('hidden');
-      $('.drum_app').removeClass('hidden');
+      $('.drum-app').removeClass('hidden');
       $('.fa').removeClass('clickable');
       }
       else
@@ -59,7 +84,7 @@ $('#drumIcon').on('click', function(){
           var audio = document.querySelector('.audio1');
           audio.src= songs[0].source;
         $('.content').removeClass('hidden');
-      $('.drum_app').addClass('hidden');
+      $('.drum-app').addClass('hidden');
       $('.play-icon').removeClass('disable');
           $('.next-icon').removeClass('disable');
           $('.previous-icon').removeClass('disable');
@@ -67,6 +92,145 @@ $('#drumIcon').on('click', function(){
       }
 
   });
+  function repeatAll()
+  {
+      var audio= document.querySelector('.audio1');
+      if(audio.currentTime==audio.duration)
+      {
+          if(shuffle==1)
+          {
+               var random= ['2','1','3','0'];
+
+              audio.src= songs[random[indexOfRandom]].source;
+          }
+          else
+          {
+          var currentSong= currentSongSource();
+          var currentSongObj= songs[currentSong];
+
+          if(currentSong-1<songs.length-1)
+          {audio.src=currentSongObj.source;}
+      else if(currentSong-1==songs.length-1)
+      {
+              currentSong=0;
+              currentSongObj= songs[currentSong];
+               audio.src=currentSongObj.source;
+      }
+  }
+       audio.play();
+
+       console.log("hsixgnig");
+       console.log(currentSongObj);
+       changeCurrentSongDetails(currentSongObj);
+      }
+  }
+  //------------------------ Next Song Function =-----------
+
+   function nextSong()
+    {
+
+             var currentSong= currentSongSource();
+            var currentSongObj= songs[currentSong];
+             var audio= document.querySelector('.audio1');
+
+            if(currentSong-1<songs.length-1)
+            {audio.src=currentSongObj.source;}
+        else if(currentSong-1==songs.length-1)
+        {
+                currentSong=0;
+                currentSongObj= songs[currentSong];
+                 audio.src=currentSongObj.source;
+        }
+         audio.play();
+         console.log("hsixgnig");
+         console.log(currentSongObj);
+         changeCurrentSongDetails(currentSongObj);
+    }
+
+    //----------------------- previous song -------------------
+
+    function preSong()
+    {
+
+             var currentSong= currentSongSource();
+            var currentSongObj= songs[currentSong-2];
+             var audio= document.querySelector('.audio1');
+
+            if(currentSong>1)
+            {audio.src=currentSongObj.source;}
+        else if(currentSong==1)
+        {
+                currentSong=songs.length-1;
+                currentSongObj= songs[currentSong];
+                 audio.src=currentSongObj.source;
+        }
+         audio.play();
+         console.log("hsixgnig");
+         console.log(currentSongObj);
+         changeCurrentSongDetails(currentSongObj);
+    }
+    //--------------------- Shuffle Function ----------------
+        var indexOfRandom=0;
+       function shuffleSongs() {
+     var audio=document.querySelector('.audio1');
+
+            // var random=~~((Math.random()*100)%4);
+            //     console.log(random);
+            var random= ['2','1','3','0'];
+
+                audio.src= songs[random[indexOfRandom]].source;
+                audio.play();
+                changeCurrentSongDetails( songs[random[indexOfRandom]]);
+                console.log();
+                indexOfRandom++;
+                if(indexOfRandom>3)
+                {
+                    indexOfRandom=0;
+                }
+       }
+       $('.shuffle-icon').on('click', function() {// play-icon wali class wala tag pakda and usko click karne pe function chla diya
+              shuffle=1-shuffle;
+              console.log('shuffle value changed' + shuffle);
+              $('.shuffle-icon').toggleClass('disable');
+
+
+              //console.log("nested if parent");
+
+             });
+
+           //----------------- Play Next pressed---------------------
+
+
+           $('.next-icon').on('click', function() {// play-icon wali class wala tag pakda and usko click karne pe function chla diya
+              nextSong();// toggleSong wala function ua machine call ki i.e. ab toggleSong wala function chalega
+
+           });
+
+           //------------------- Play Previous Song ------------------
+
+
+           $('.previous-icon').on('click', function() {// play-icon wali class wala tag pakda and usko click karne pe function chla diya
+              preSong();// toggleSong wala function ua machine call ki i.e. ab toggleSong wala function chalega
+
+           });
+  var keycodes=['65','83','68','70','71','72','74','75','76'];
+var drumClicked=0;
+      function keyPressDrumPlay(key)
+      {
+           $('body').on('keypress', function(event) { //body ko pakda uspe keypress ka event lagaya, jab key press hogi tab function chalega; isme event as an argument pass kiya hai
+              var target= event.target;
+              var audioClass= '.audio'+(key+1);
+              var audio= document.querySelector(audioClass);
+
+              if (event.keyCode == keycodes[key] && drumClicked==1) // event se hum bhot kuch check kar sakte hain jaise yahan humne keyCode check kiya hai matlab jo key humne press ki hai uska code 32 hai to ander wala code chalega otherwise nhi
+              {
+                  console.log(keycodes[key]);
+                  audio.src= drumSound[key] ;
+                 audio.play();// toggleSong wala function call kar diya
+             }
+          });
+      }
+
 
 //function for current time and duration of the song selected
 
@@ -126,18 +290,19 @@ $('.slider-icon').on('click', function(){
    {
        sliderImagesAdded();
     $('.content').addClass('hidden');
-   $('.drum_app').removeClass('clickable');
+   $('.drum-app').removeClass('clickable');
    $('.slider').removeClass('hidden');
    }
    else
    {
 
      $('.content').removeClass('hidden');
-   $('.drum_app').addClass('clickable');
+   $('.drum-app').addClass('clickable');
    $('.slider').addClass('hidden');
    }
 
 });
+
         // var songName1 = 'Badri Ki Dulhania (Title Track)';
         // var songName2 = 'Humma Song';
         // var songName3 = 'Nashe Si Chadh Gayi';
