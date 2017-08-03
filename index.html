@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Song App</title>
+  <link href="font-awesome.css" rel="stylesheet" type="text/css">
+  <!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+  <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div class="wrapper">
+        <section class="welcome-screen ">
+            <h1>Welcome to Songify</h1>
+            <h3>Enter name to access your account</h3>
+            <div class="input-wrapper">
+                <input id="name-input" placeholder="Name" style="font-size: 18px; color: gray;" type="text"> <button style="font-size: 18px;">Go</button>
+            </div>
+        </section>
+        <div class="main hidden">
+        <header>
+                        <div class="right floated user-name"></div>
+                    </header>
+                    <section class="content">
+                        <audio class="audio1" src="song1.mp3"></audio>
+                        <audio class="audio2"></audio>
+                        <audio class="audio3"></audio>
+                        <audio class="audio4"></audio>
+                        <audio class="audio5"></audio>
+                        <audio class="audio6"></audio>
+                        <audio class="audio7"></audio>
+                        <table id="songs">
+                            <thead class="list-headers">
+                                <tr>
+                                    <td>Title</td>
+                                    <td>Artist</td>
+                                    <td>Album</td>
+                                    <td>Duration</td>
+                                </tr>
+                            </thead>
+                            <tbody class="song-list">
+                                <tr class="song" id="song1">
+                                    <td class="song-name"></td>
+                                    <td class="song-artist"></td>
+                                    <td class="song-album"></td>
+                                    <td class="song-length"></td>
+                                </tr>
+                                <tr class="song" id="song2">
+                                    <td class="song-name"></td>
+                                    <td class="song-artist"></td>
+                                    <td class="song-album"></td>
+                                    <td class="song-length"></td>
+                                </tr>
+                                <tr class="song" id="song3">
+                                    <td class="song-name"></td>
+                                    <td class="song-artist"></td>
+                                    <td class="song-album"></td>
+                                    <td class="song-length"></td>
+                                </tr>
+                                <tr class="song" id="song4">
+                                    <td class="song-name"></td>
+                                    <td class="song-artist"></td>
+                                    <td class="song-album"></td>
+                                    <td class="song-length"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <div class="currentSong">
+                            <img id="currentSongImg" src="">
+                            <div>
+                                <p id="currentSongName"></p>
+                                <p id="currentSongAlbum"></p>
+                            </div>
+                        </div> -->
+                        <div class="current-song">
+              <img id="current-song-image">
+              <div>
+              <p class="current-song-name"></p>
+              <p class="current-song-album"></p>
+             	</div>
+              </div>
+                      </section>
+    <section class="drum-app hidden">
+      <div id="back">
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+</section>
+<section class="slider hidden">
+                <div class="carousel slide" data-ride="carousel" id="carousel-example-generic">
+                    <!-- Indicators -->
+                    <!-- <ol class="carousel-indicators">
+                        <li class="active" data-slide-to="0" data-target="#carousel-example-generic"></li>
+                        <li data-slide-to="1" data-target="#carousel-example-generic"></li>
+                        <li data-slide-to="2" data-target="#carousel-example-generic"></li>
+                    </ol> --><!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img alt="..." src="images.jpg">
+                            <!-- <div class="carousel-caption">
+                            </div> -->
+                        </div>
+
+                        <!--<div class="item">
+                            <img alt="..." src="topi_ride_3.jpg">  <div class="carousel-caption">
+
+                            </div>
+                        </div>-->
+                    </div><!-- Controls -->
+                     <a class="left carousel-control" data-slide="prev" href="#carousel-example-generic" role="button"><!-- <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span> --> <span class="sr-only">Previous</span></a> <a class="right carousel-control" data-slide="next" href="#carousel-example-generic" role="button"><!-- <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>  --><span class="sr-only">Next</span></a>
+                </div>
+            </section>
+<footer>
+              <div class="controls">
+                  <div class="player-buttons">
+                    <i class="fa fa-sliders slider-icon clickable disable" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-random clickable shuffle-icon disable"></i>
+                    <i aria-hidden="true" class="fa fa-step-backward clickable previous-icon"></i>
+                    <i aria-hidden="true" class="fa fa-play clickable play-icon"></i>
+                    <i aria-hidden="true" class="fa fa-step-forward clickable next-icon"></i>
+                    <i aria-hidden="true" class="fa fa-repeat clickable repeat-icon disable"></i>
+                    <img class="clickable" id="drumIcon" src="drum.png"></div>
+                  <div class="progress-wrapper">
+                      <span class="time-elapsed"></span>
+                      <div class="player-progress">
+                          <div class="progress-filled"></div>
+                      </div><span class="song-duration"></span>
+                  </div>
+              </div>
+          </footer>
+</div>
+</div>
+<script src="jquery.js">
+  </script>
+  <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
+  </script>
+<script src="main.js">
+</script>
+</body>
+</html>
